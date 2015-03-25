@@ -26,5 +26,6 @@ namespace KitchenDbApp
         }
     
         public DbSet<Potrawy> Potrawies { get; set; }
+        public DbSet<Skladniki> Skladnikis { get; set; }
     }
 }

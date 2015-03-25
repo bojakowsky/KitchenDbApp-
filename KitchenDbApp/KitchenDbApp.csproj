@@ -92,6 +92,9 @@
       <DependentUpon>RecipeModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SearchingTool.cs" />
+    <Compile Include="Skladniki.cs">
+      <DependentUpon>RecipeModel.tt</DependentUpon>
+    </Compile>
     <Page Include="AddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

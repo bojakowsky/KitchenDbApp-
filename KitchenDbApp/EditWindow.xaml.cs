@@ -20,13 +20,13 @@ namespace KitchenDbApp
     public partial class EditWindow : Window
     {
         private Potrawy p;
-
+        private KitchenEntities dataEntities;
         public EditWindow()
         {
             InitializeComponent();
         }
 
-        public EditWindow(Potrawy p)
+        public EditWindow(Potrawy p, KitchenEntities dataEntities)
         {
             InitializeComponent();
             this.p = p;
@@ -34,19 +34,33 @@ namespace KitchenDbApp
             IngTextBox.Text = p.Skladniki;
             PrepTextBox.Text = p.Przygotowanie;
             IdLabel.Content = "" + p.IdPotrawy;
+
+            this.dataEntities = dataEntities;
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
+            
+            dataEntities.Database.ExecuteSqlCommand("DELETE FROM Skladniki WHERE IdPotrawy=" + p.IdPotrawy);
 
             p.NazwaPotrawy = NameTextBox.Text;
             p.Skladniki = IngTextBox.Text;
             p.Przygotowanie = PrepTextBox.Text;
-            using (var dbCtx = new KitchenEntities())
+
+            dataEntities.Entry(p).State = System.Data.EntityState.Modified;
+            dataEntities.SaveChanges();
+
+            Skladniki ingridient = new Skladniki();
+            string[] ingr = System.Text.RegularExpressions.Regex.Split(p.Skladniki, "\r\n");
+
+            ingridient.IdPotrawy = p.IdPotrawy;
+            foreach (string i in ingr)
             {
-                dbCtx.Entry(p).State = System.Data.EntityState.Modified;
-                dbCtx.SaveChanges();
+                ingridient.Skladnik = i;
+                dataEntities.Entry(ingridient).State = System.Data.EntityState.Added;
+                dataEntities.SaveChanges();
             }
+
             this.Close();
         }
     }

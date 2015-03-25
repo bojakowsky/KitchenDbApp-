@@ -21,7 +21,6 @@ namespace KitchenDbApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        KitchenEntities dataEntities = new KitchenEntities();
         public MainWindow()
         {
             InitializeComponent();
@@ -30,11 +29,13 @@ namespace KitchenDbApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //ObjectQuery<Potrawy> recipes = dataEntities.Potrawy;
-
-            var query =
-            from recipe in dataEntities.Potrawies
-            select new { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
-            DataGrid.ItemsSource = query.ToList();
+            using (var dataEntities = new KitchenEntities())
+            {
+                var query =
+                from recipe in dataEntities.Potrawies
+                select new { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
+                DataGrid.ItemsSource = query.ToList();
+            }
 
             /*KitchenDbApp.KitchenDataSet kitchenDataSet = ((KitchenDbApp.KitchenDataSet)(this.FindResource("kitchenDataSet")));
             // Load data into the table Potrawy. You can modify this code as needed.
@@ -59,29 +60,33 @@ namespace KitchenDbApp
                 Potrawy recipeRow = new Potrawy();
                 int dataGridSelection = DataGrid.SelectedIndex + 1;
                 recipeRow.IdPotrawy = dataGridSelection;
-                var original = dataEntities.Potrawies.Find(recipeRow.IdPotrawy);
 
-                string msgtext = "Do you really want to delete that row?";
-                string txt = "Deleting row";
-                MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
-                switch (result)
+                using (var dataEntities = new KitchenEntities())
                 {
-                    case MessageBoxResult.Yes:
+                    var original = dataEntities.Potrawies.Find(recipeRow.IdPotrawy);
+                    string msgtext = "Do you really want to delete that row?";
+                    string txt = "Deleting row";
+                    MessageBoxButton button = MessageBoxButton.YesNoCancel;
+                    MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
                             original.NazwaPotrawy = "NULL";
                             original.Skladniki = "NULL";
                             original.Przygotowanie = "NULL";
-                            using (var dbCtx = new KitchenEntities())
-                            {
-                                dbCtx.Entry(original).State = System.Data.EntityState.Modified;
-                                dbCtx.SaveChanges();
-                            }
+
+                            dataEntities.Entry(original).State = System.Data.EntityState.Modified;
+                            dataEntities.SaveChanges();
+
+                            dataEntities.Database.ExecuteSqlCommand("DELETE FROM Skladniki WHERE IdPotrawy=" + original.IdPotrawy);
+
                             Window_Loaded(sender, e);
-                        break;
-                    case MessageBoxResult.No:
-                        break;
-                    case MessageBoxResult.Cancel:
-                        break;
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                        case MessageBoxResult.Cancel:
+                            break;
+                    }
                 }
             }
             catch (Exception Ex)
@@ -97,9 +102,12 @@ namespace KitchenDbApp
             {
                 Potrawy recipeRow = new Potrawy();
                 recipeRow.IdPotrawy = ++(DataGrid.SelectedIndex);
-                var original = dataEntities.Potrawies.Find(recipeRow.IdPotrawy);
-                var newWindow = new EditWindow(original);
-                newWindow.ShowDialog();
+                using (var dataEntities = new KitchenEntities())
+                {
+                    var original = dataEntities.Potrawies.Find(recipeRow.IdPotrawy);
+                    var newWindow = new EditWindow(original, dataEntities);
+                    newWindow.ShowDialog();
+                }
                 Window_Loaded(sender, e);
             }
             catch (Exception Ex)
@@ -111,7 +119,7 @@ namespace KitchenDbApp
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //SearchingTool search = new SearchingTool(SearchTextRecipe.Text);
         }
 
         

@@ -33,12 +33,25 @@ namespace KitchenDbApp
             recipe.NazwaPotrawy = NameTextBox.Text;
             recipe.Skladniki = IngTextBox.Text;
             recipe.Przygotowanie = PrepTextBox.Text;
+
             try
             {
                 using (var dbCtx = new KitchenEntities())
                 {
                     dbCtx.Entry(recipe).State = System.Data.EntityState.Added;
                     dbCtx.SaveChanges();
+
+                    Skladniki ingridient = new Skladniki();
+                    string[] ingr = System.Text.RegularExpressions.Regex.Split(recipe.Skladniki, "\r\n");
+
+                    ingridient.IdPotrawy = recipe.IdPotrawy;
+                    foreach (string i in ingr)
+                    {
+                        ingridient.Skladnik = i;
+                        dbCtx.Entry(ingridient).State = System.Data.EntityState.Added;
+                        dbCtx.SaveChanges();
+                    }
+
                 }
                 this.Close();
             }

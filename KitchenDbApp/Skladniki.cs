@@ -12,18 +12,12 @@ namespace KitchenDbApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Potrawy
+    public partial class Skladniki
     {
-        public Potrawy()
-        {
-            this.Skladnikis = new HashSet<Skladniki>();
-        }
+        public int IdSkladnik { get; set; }
+        public Nullable<int> IdPotrawy { get; set; }
+        public string Skladnik { get; set; }
     
-        public int IdPotrawy { get; set; }
-        public string NazwaPotrawy { get; set; }
-        public string Skladniki { get; set; }
-        public string Przygotowanie { get; set; }
-    
-        public virtual ICollection<Skladniki> Skladnikis { get; set; }
+        public virtual Potrawy Potrawy { get; set; }
     }
 }

@@ -8,7 +8,7 @@
         <DataGrid Name="DataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="527" Width="923" MouseDoubleClick="EditButton_Click" MouseRightButtonDown="DeleteButton_Click"  AutoGenerateColumns="True">
         </DataGrid>
         <Button x:Name="AddRecipe" Content="Add recipe" HorizontalAlignment="Left" Margin="948,10,0,0" VerticalAlignment="Top" Width="178" RenderTransformOrigin="0.213,-0.091" Height="25" Click="AddRecipe_Click"/>
-        <TextBox x:Name="SearchTextrecipe" HorizontalAlignment="Left" Height="201" Margin="948,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" AcceptsReturn="True" />
+        <TextBox x:Name="SearchTextRecipe" HorizontalAlignment="Left" Height="201" Margin="948,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" AcceptsReturn="True" />
         <Button x:Name="SearchRecipe" Content="Search" HorizontalAlignment="Left" Margin="948,40,0,0" VerticalAlignment="Top" Width="178" Click="SearchButton_Click"/>
 
     </Grid>

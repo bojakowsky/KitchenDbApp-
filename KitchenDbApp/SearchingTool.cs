@@ -20,26 +20,36 @@ namespace KitchenDbApp
         private string[] ingridients;
         private string initial;
 
+
         public SearchingTool(string x)
         {
             initial = x;
             tokenizeIngridients();
+            findRecipes();
         }
 
         private void tokenizeIngridients()
         {
-            ingridients = initial.Split('-');
+            //ingridients = initial.Split('-');
+            ingridients = Regex.Split(initial, "\r\n");
         }
 
         private void findRecipes()
         {
-            KitchenEntities dataEntities = new KitchenEntities();
-            DataGrid searchResult = new DataGrid();
-                var query =
+            //KitchenEntities dataEntities = new KitchenEntities();
+            foreach ( string s in ingridients)
+            {
+
+            /*var query =
                 from recipe in dataEntities.Potrawies
-                //where ..
-                select new { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
-            searchResult.ItemsSource = query.ToList();
+                where ingridients = Regex.Split(initial, "\r\n")
+                select new { recipe.IdPotrawy };
+            DataGrid data = new DataGrid()
+            data.ItemsSource = query.ToList();
+            */
+            }
+            
+                
         }
 
     }
