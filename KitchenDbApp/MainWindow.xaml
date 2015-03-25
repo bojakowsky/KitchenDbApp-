@@ -1,16 +1,15 @@
-﻿<Window x:Name="Window" x:Class="KitchenDbApp.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RecepiesDb" Height="600" Width="800"  WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="#FFD3E1F9" ResizeMode="NoResize" Loaded="Window_Loaded"  >
+        xmlns:local="clr-namespace:KitchenDbApp" x:Name="Window" x:Class="KitchenDbApp.MainWindow"
+        Title="recipesDb" Height="600" Width="1142"  WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="#FFD3E1F9" ResizeMode="NoResize" Loaded="Window_Loaded"  >
+
     <Grid>
-        <DataGrid Name="DataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="527" Width="582"/>
-        <Button x:Name="AddRecepie" Content="Add recepie" HorizontalAlignment="Left" Margin="606,10,0,0" VerticalAlignment="Top" Width="178" RenderTransformOrigin="0.213,-0.091" Height="25" Click="AddRecepie_Click"/>
-        <Button x:Name="EditRecepie" Content="Edit recepie" HorizontalAlignment="Left" Margin="606,40,0,0" VerticalAlignment="Top" Width="178"/>
-        <TextBox x:Name="SearchTextRecepie" HorizontalAlignment="Left" Height="155" Margin="606,323,0,0" TextWrapping="Wrap" Text="ziemniaki;maslo;szynka" VerticalAlignment="Top" Width="178"/>
-        <Button x:Name="SearchRecepie" Content="Search" HorizontalAlignment="Left" Margin="606,296,0,0" VerticalAlignment="Top" Width="178"/>
-
-
-
+        <DataGrid Name="DataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="527" Width="923" MouseDoubleClick="EditButton_Click" MouseRightButtonDown="DeleteButton_Click"  AutoGenerateColumns="True">
+        </DataGrid>
+        <Button x:Name="AddRecipe" Content="Add recipe" HorizontalAlignment="Left" Margin="948,10,0,0" VerticalAlignment="Top" Width="178" RenderTransformOrigin="0.213,-0.091" Height="25" Click="AddRecipe_Click"/>
+        <TextBox x:Name="SearchTextrecipe" HorizontalAlignment="Left" Height="201" Margin="948,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" AcceptsReturn="True" />
+        <Button x:Name="SearchRecipe" Content="Search" HorizontalAlignment="Left" Margin="948,40,0,0" VerticalAlignment="Top" Width="178" Click="SearchButton_Click"/>
 
     </Grid>
 </Window>

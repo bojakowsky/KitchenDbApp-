@@ -29,16 +29,23 @@ namespace KitchenDbApp
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Potrawy recepie = new Potrawy();
-            recepie.NazwaPotrawy = NameTextBox.Text;
-            recepie.Skladniki = IngTextBox.Text;
-
-            using (var dbCtx = new KitchenEntities())
+            Potrawy recipe = new Potrawy();
+            recipe.NazwaPotrawy = NameTextBox.Text;
+            recipe.Skladniki = IngTextBox.Text;
+            recipe.Przygotowanie = PrepTextBox.Text;
+            try
             {
-                dbCtx.Entry(recepie).State = System.Data.EntityState.Added;
-                dbCtx.SaveChanges();
+                using (var dbCtx = new KitchenEntities())
+                {
+                    dbCtx.Entry(recipe).State = System.Data.EntityState.Added;
+                    dbCtx.SaveChanges();
+                }
+                this.Close();
             }
-            this.Close();
+            catch (Exception)
+            {
+                MessageBox.Show("Added failed");
+            }
         }
     }
 }

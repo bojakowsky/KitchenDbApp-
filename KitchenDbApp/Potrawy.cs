@@ -17,5 +17,6 @@ namespace KitchenDbApp
         public int IdPotrawy { get; set; }
         public string NazwaPotrawy { get; set; }
         public string Skladniki { get; set; }
+        public string Przygotowanie { get; set; }
     }
 }

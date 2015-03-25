@@ -13,8 +13,9 @@
             <PropertyRef Name="IdPotrawy" />
           </Key>
           <Property Name="IdPotrawy" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="NazwaPotrawy" Type="text" Nullable="false" />
+          <Property Name="NazwaPotrawy" Type="varchar" MaxLength="100" />
           <Property Name="Skladniki" Type="varchar" MaxLength="500" />
+          <Property Name="Przygotowanie" Type="varchar" MaxLength="2000" />
         </EntityType>
       </Schema>
     </edmx:StorageModels>
@@ -29,8 +30,9 @@
             <PropertyRef Name="IdPotrawy" />
           </Key>
           <Property Name="IdPotrawy" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="NazwaPotrawy" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="NazwaPotrawy" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Skladniki" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Przygotowanie" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -44,6 +46,7 @@
                 <ScalarProperty Name="IdPotrawy" ColumnName="IdPotrawy" />
                 <ScalarProperty Name="NazwaPotrawy" ColumnName="NazwaPotrawy" />
                 <ScalarProperty Name="Skladniki" ColumnName="Skladniki" />
+                <ScalarProperty Name="Przygotowanie" ColumnName="Przygotowanie" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
