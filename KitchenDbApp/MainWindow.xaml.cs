@@ -19,6 +19,23 @@ namespace KitchenDbApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    public class Val
+    {
+        public int IdPotrawy { get; set; }
+        public string NazwaPotrawy { get; set; }
+        public string Skladniki { get; set; }
+        public string Przygotowanie { get; set; }
+
+        public Val(int id, string name, string ingrid, string prep)
+        {
+            IdPotrawy = id;
+            NazwaPotrawy = name;
+            Skladniki = ingrid;
+            Przygotowanie = prep;
+        }
+    }
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -33,7 +50,7 @@ namespace KitchenDbApp
             {
                 var query =
                 from recipe in dataEntities.Potrawies
-                select new { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
+                select new  { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
                 DataGrid.ItemsSource = query.ToList();
             }
 
@@ -53,17 +70,28 @@ namespace KitchenDbApp
             Window_Loaded(sender, e);
         }
 
+        
+        public int GetSelectedId()
+        {
+            DataGridRow row = (DataGridRow)DataGrid.ItemContainerGenerator.ContainerFromIndex(DataGrid.SelectedIndex);
+            DataGridCell RowColumn = DataGrid.Columns[0].GetCellContent(row).Parent as DataGridCell;
+            string CellValue = ((TextBlock)RowColumn.Content).Text;
+            return Convert.ToInt32(CellValue);    
+        }
+
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Potrawy recipeRow = new Potrawy();
-                int dataGridSelection = DataGrid.SelectedIndex + 1;
-                recipeRow.IdPotrawy = dataGridSelection;
-
+                //int dataGridSelection = DataGrid.SelectedIndex + 1;
+                //recipeRow.IdPotrawy = dataGridSelection;
                 using (var dataEntities = new KitchenEntities())
                 {
-                    var original = dataEntities.Potrawies.Find(recipeRow.IdPotrawy);
+                    
+
+                    var original = dataEntities.Potrawies.Find(GetSelectedId());
                     string msgtext = "Do you really want to delete that row?";
                     string txt = "Deleting row";
                     MessageBoxButton button = MessageBoxButton.YesNoCancel;
@@ -101,10 +129,9 @@ namespace KitchenDbApp
             try
             {
                 Potrawy recipeRow = new Potrawy();
-                recipeRow.IdPotrawy = ++(DataGrid.SelectedIndex);
                 using (var dataEntities = new KitchenEntities())
                 {
-                    var original = dataEntities.Potrawies.Find(recipeRow.IdPotrawy);
+                    var original = dataEntities.Potrawies.Find(GetSelectedId());
                     var newWindow = new EditWindow(original, dataEntities);
                     newWindow.ShowDialog();
                 }
@@ -119,7 +146,21 @@ namespace KitchenDbApp
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            //SearchingTool search = new SearchingTool(SearchTextRecipe.Text);
+            SearchingTool search = new SearchingTool(SearchTextRecipe.Text);
+            DataGrid.ItemsSource = search.getSearchResult().ItemsSource;
+            //
+        }
+
+        private void ResetSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window_Loaded(sender, e);
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("To edit the row double click on it. \n"
+                            + "To delete the row right select it and then right click.\n"
+                            + "Have a nice day ;) !");
         }
 
         

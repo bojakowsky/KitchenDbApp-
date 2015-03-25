@@ -19,7 +19,7 @@ namespace KitchenDbApp
     {
         private string[] ingridients;
         private string initial;
-
+        private DataGrid result;
 
         public SearchingTool(string x)
         {
@@ -36,21 +36,34 @@ namespace KitchenDbApp
 
         private void findRecipes()
         {
-            //KitchenEntities dataEntities = new KitchenEntities();
-            foreach ( string s in ingridients)
+            if (ingridients.Count() > 0)
             {
+                using (var dataEntities = new KitchenEntities())
+                {
+                    var query =
+                        from ingr in dataEntities.Skladnikis
+                        where ingridients.Contains(ingr.Skladnik)
+                        select new { ingr.IdPotrawy };
 
-            /*var query =
-                from recipe in dataEntities.Potrawies
-                where ingridients = Regex.Split(initial, "\r\n")
-                select new { recipe.IdPotrawy };
-            DataGrid data = new DataGrid()
-            data.ItemsSource = query.ToList();
-            */
+                    List<int> iList = new List<int>();
+                    foreach (var row in query)
+                    {
+                        iList.Add((int)row.IdPotrawy);
+                    }
+
+                    var nextQuery =
+                        from recipe in dataEntities.Potrawies
+                        where iList.Contains(recipe.IdPotrawy)
+                        select new { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
+                    result = new DataGrid();
+                    result.ItemsSource = nextQuery.ToList();
+                }
             }
-            
-                
         }
 
+        public DataGrid getSearchResult()
+        {
+            return result;
+        }
     }
 }
