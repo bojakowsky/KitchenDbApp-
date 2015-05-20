@@ -16,22 +16,14 @@ namespace KitchenDbApp
     {
         public Potrawy()
         {
-            this.Skladnikis = new HashSet<Skladniki>();
+            this.Skladniki1 = new HashSet<Skladniki>();
         }
-        
-        public Potrawy(int id, string name, string ingrid, string prep)
-        {
-            IdPotrawy = id;
-            NazwaPotrawy = name;
-            Skladniki = ingrid;
-            Przygotowanie = prep;
-        }
-
+    
         public int IdPotrawy { get; set; }
         public string NazwaPotrawy { get; set; }
         public string Skladniki { get; set; }
         public string Przygotowanie { get; set; }
-        
-        public virtual ICollection<Skladniki> Skladnikis { get; set; }
+    
+        public virtual ICollection<Skladniki> Skladniki1 { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Data.Entity;
 namespace KitchenDbApp
 {
     /// <summary>
@@ -20,13 +20,13 @@ namespace KitchenDbApp
     public partial class EditWindow : Window
     {
         private Potrawy p;
-        private KitchenEntities dataEntities;
+        private KitchenEntities1 dataEntities;
         public EditWindow()
         {
             InitializeComponent();
         }
 
-        public EditWindow(Potrawy p, KitchenEntities dataEntities)
+        public EditWindow(Potrawy p, KitchenEntities1 dataEntities)
         {
             InitializeComponent();
             this.p = p;
@@ -47,7 +47,7 @@ namespace KitchenDbApp
             p.Skladniki = IngTextBox.Text;
             p.Przygotowanie = PrepTextBox.Text;
 
-            dataEntities.Entry(p).State = System.Data.EntityState.Modified;
+            dataEntities.Entry(p).State = EntityState.Modified;
             dataEntities.SaveChanges();
 
             Skladniki ingridient = new Skladniki();
@@ -57,7 +57,7 @@ namespace KitchenDbApp
             foreach (string i in ingr)
             {
                 ingridient.Skladnik = i;
-                dataEntities.Entry(ingridient).State = System.Data.EntityState.Added;
+                dataEntities.Entry(ingridient).State = EntityState.Added;
                 dataEntities.SaveChanges();
             }
 

@@ -12,9 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Data.Objects;
-using System.Data;
-
+using System.Data.Entity;
 namespace KitchenDbApp
 {
     /// <summary>
@@ -36,9 +34,9 @@ namespace KitchenDbApp
 
             try
             {
-                using (var dbCtx = new KitchenEntities())
+                using (var dbCtx = new KitchenEntities1())
                 {
-                    dbCtx.Entry(recipe).State = System.Data.EntityState.Added;
+                    dbCtx.Entry(recipe).State = EntityState.Added;
                     dbCtx.SaveChanges();
 
                     Skladniki ingridient = new Skladniki();
@@ -48,7 +46,7 @@ namespace KitchenDbApp
                     foreach (string i in ingr)
                     {
                         ingridient.Skladnik = i;
-                        dbCtx.Entry(ingridient).State = System.Data.EntityState.Added;
+                        dbCtx.Entry(ingridient).State = EntityState.Added;
                         dbCtx.SaveChanges();
                     }
 

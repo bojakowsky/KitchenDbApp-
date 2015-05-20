@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Data.Objects;
-
+using System.Data.Entity;
 namespace KitchenDbApp
 {
     /// <summary>
@@ -46,10 +45,10 @@ namespace KitchenDbApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //ObjectQuery<Potrawy> recipes = dataEntities.Potrawy;
-            using (var dataEntities = new KitchenEntities())
+            using (var dataEntities = new KitchenEntities1())
             {
                 var query =
-                from recipe in dataEntities.Potrawies
+                from recipe in dataEntities.Potrawy
                 select new  { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
                 DataGrid.ItemsSource = query.ToList();
             }
@@ -87,11 +86,11 @@ namespace KitchenDbApp
                 Potrawy recipeRow = new Potrawy();
                 //int dataGridSelection = DataGrid.SelectedIndex + 1;
                 //recipeRow.IdPotrawy = dataGridSelection;
-                using (var dataEntities = new KitchenEntities())
+                using (var dataEntities = new KitchenEntities1())
                 {
                     
 
-                    var original = dataEntities.Potrawies.Find(GetSelectedId());
+                    var original = dataEntities.Potrawy.Find(GetSelectedId());
                     string msgtext = "Do you really want to delete that row?";
                     string txt = "Deleting row";
                     MessageBoxButton button = MessageBoxButton.YesNoCancel;
@@ -103,7 +102,7 @@ namespace KitchenDbApp
                             original.Skladniki = "NULL";
                             original.Przygotowanie = "NULL";
 
-                            dataEntities.Entry(original).State = System.Data.EntityState.Modified;
+                            dataEntities.Entry(original).State = EntityState.Modified;
                             dataEntities.SaveChanges();
 
                             dataEntities.Database.ExecuteSqlCommand("DELETE FROM Skladniki WHERE IdPotrawy=" + original.IdPotrawy);
@@ -129,9 +128,9 @@ namespace KitchenDbApp
             try
             {
                 Potrawy recipeRow = new Potrawy();
-                using (var dataEntities = new KitchenEntities())
+                using (var dataEntities = new KitchenEntities1())
                 {
-                    var original = dataEntities.Potrawies.Find(GetSelectedId());
+                    var original = dataEntities.Potrawy.Find(GetSelectedId());
                     var newWindow = new EditWindow(original, dataEntities);
                     newWindow.ShowDialog();
                 }

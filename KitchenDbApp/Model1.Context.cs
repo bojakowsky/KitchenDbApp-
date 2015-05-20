@@ -13,10 +13,10 @@ namespace KitchenDbApp
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KitchenEntities : DbContext
+    public partial class KitchenEntities1 : DbContext
     {
-        public KitchenEntities()
-            : base("name=KitchenEntities")
+        public KitchenEntities1()
+            : base("name=KitchenEntities1")
         {
         }
     
@@ -25,7 +25,7 @@ namespace KitchenDbApp
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Potrawy> Potrawies { get; set; }
-        public DbSet<Skladniki> Skladnikis { get; set; }
+        public DbSet<Potrawy> Potrawy { get; set; }
+        public DbSet<Skladniki> Skladniki { get; set; }
     }
 }

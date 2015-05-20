@@ -38,21 +38,28 @@ namespace KitchenDbApp
         {
             if (ingridients.Count() > 0)
             {
-                using (var dataEntities = new KitchenEntities())
+                using (var dataEntities = new KitchenEntities1())
                 {
                     var query =
-                        from ingr in dataEntities.Skladnikis
+                        from ingr in dataEntities.Skladniki
                         where ingridients.Contains(ingr.Skladnik)
                         select new { ingr.IdPotrawy };
 
                     List<int> iList = new List<int>();
                     foreach (var row in query)
                     {
-                        iList.Add((int)row.IdPotrawy);
+                        int counter = 0 ;
+                        foreach (var r in query)
+                        {
+                            if (r.IdPotrawy == row.IdPotrawy) counter++;
+                        }
+                        if (counter == ingridients.Count()) iList.Add((int)row.IdPotrawy);
                     }
 
+
+
                     var nextQuery =
-                        from recipe in dataEntities.Potrawies
+                        from recipe in dataEntities.Potrawy
                         where iList.Contains(recipe.IdPotrawy)
                         select new { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
                     result = new DataGrid();

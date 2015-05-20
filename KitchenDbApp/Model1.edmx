@@ -4,11 +4,11 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KitchenModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="KitchenModelStoreContainer">
-          <EntitySet Name="Potrawy" EntityType="KitchenModel.Store.Potrawy" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Skladniki" EntityType="KitchenModel.Store.Skladniki" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__Skladniki__IdPot__4CA06362" Association="KitchenModel.Store.FK__Skladniki__IdPot__4CA06362">
+      <Schema Namespace="KitchenModel1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="KitchenModel1StoreContainer">
+          <EntitySet Name="Potrawy" EntityType="KitchenModel1.Store.Potrawy" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Skladniki" EntityType="KitchenModel1.Store.Skladniki" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Skladniki__IdPot__7C4F7684" Association="KitchenModel1.Store.FK__Skladniki__IdPot__7C4F7684">
             <End Role="Potrawy" EntitySet="Potrawy" />
             <End Role="Skladniki" EntitySet="Skladniki" />
           </AssociationSet>
@@ -28,11 +28,11 @@
           </Key>
           <Property Name="IdSkladnik" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="IdPotrawy" Type="int" />
-          <Property Name="Skladnik" Type="text" />
+          <Property Name="Skladnik" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__Skladniki__IdPot__4CA06362">
-          <End Role="Potrawy" Type="KitchenModel.Store.Potrawy" Multiplicity="0..1" />
-          <End Role="Skladniki" Type="KitchenModel.Store.Skladniki" Multiplicity="*" />
+        <Association Name="FK__Skladniki__IdPot__7C4F7684">
+          <End Role="Potrawy" Type="KitchenModel1.Store.Potrawy" Multiplicity="0..1" />
+          <End Role="Skladniki" Type="KitchenModel1.Store.Skladniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Potrawy">
               <PropertyRef Name="IdPotrawy" />
@@ -46,13 +46,13 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="KitchenModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="KitchenEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Potrawies" EntityType="KitchenModel.Potrawy" />
-          <EntitySet Name="Skladnikis" EntityType="KitchenModel.Skladniki" />
-          <AssociationSet Name="FK__Skladniki__IdPot__4CA06362" Association="KitchenModel.FK__Skladniki__IdPot__4CA06362">
-            <End Role="Potrawy" EntitySet="Potrawies" />
-            <End Role="Skladniki" EntitySet="Skladnikis" />
+      <Schema Namespace="KitchenModel1" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KitchenEntities1" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Potrawy" EntityType="KitchenModel1.Potrawy" />
+          <EntitySet Name="Skladniki" EntityType="KitchenModel1.Skladniki" />
+          <AssociationSet Name="FK__Skladniki__IdPot__7C4F7684" Association="KitchenModel1.FK__Skladniki__IdPot__7C4F7684">
+            <End Role="Potrawy" EntitySet="Potrawy" />
+            <End Role="Skladniki" EntitySet="Skladniki" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Potrawy">
@@ -63,7 +63,7 @@
           <Property Name="NazwaPotrawy" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Skladniki" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
           <Property Name="Przygotowanie" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Skladnikis" Relationship="KitchenModel.FK__Skladniki__IdPot__4CA06362" FromRole="Potrawy" ToRole="Skladniki" />
+          <NavigationProperty Name="Skladniki1" Relationship="KitchenModel1.FK__Skladniki__IdPot__7C4F7684" FromRole="Potrawy" ToRole="Skladniki" />
         </EntityType>
         <EntityType Name="Skladniki">
           <Key>
@@ -71,12 +71,12 @@
           </Key>
           <Property Name="IdSkladnik" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="IdPotrawy" Type="Int32" />
-          <Property Name="Skladnik" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Potrawy" Relationship="KitchenModel.FK__Skladniki__IdPot__4CA06362" FromRole="Skladniki" ToRole="Potrawy" />
+          <Property Name="Skladnik" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Potrawy" Relationship="KitchenModel1.FK__Skladniki__IdPot__7C4F7684" FromRole="Skladniki" ToRole="Potrawy" />
         </EntityType>
-        <Association Name="FK__Skladniki__IdPot__4CA06362">
-          <End Role="Potrawy" Type="KitchenModel.Potrawy" Multiplicity="0..1" />
-          <End Role="Skladniki" Type="KitchenModel.Skladniki" Multiplicity="*" />
+        <Association Name="FK__Skladniki__IdPot__7C4F7684">
+          <End Role="Potrawy" Type="KitchenModel1.Potrawy" Multiplicity="0..1" />
+          <End Role="Skladniki" Type="KitchenModel1.Skladniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Potrawy">
               <PropertyRef Name="IdPotrawy" />
@@ -91,9 +91,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="KitchenModelStoreContainer" CdmEntityContainer="KitchenEntities">
-          <EntitySetMapping Name="Potrawies">
-            <EntityTypeMapping TypeName="KitchenModel.Potrawy">
+        <EntityContainerMapping StorageEntityContainer="KitchenModel1StoreContainer" CdmEntityContainer="KitchenEntities1">
+          <EntitySetMapping Name="Potrawy">
+            <EntityTypeMapping TypeName="KitchenModel1.Potrawy">
               <MappingFragment StoreEntitySet="Potrawy">
                 <ScalarProperty Name="IdPotrawy" ColumnName="IdPotrawy" />
                 <ScalarProperty Name="NazwaPotrawy" ColumnName="NazwaPotrawy" />
@@ -102,8 +102,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Skladnikis">
-            <EntityTypeMapping TypeName="KitchenModel.Skladniki">
+          <EntitySetMapping Name="Skladniki">
+            <EntityTypeMapping TypeName="KitchenModel1.Skladniki">
               <MappingFragment StoreEntitySet="Skladniki">
                 <ScalarProperty Name="IdSkladnik" ColumnName="IdSkladnik" />
                 <ScalarProperty Name="IdPotrawy" ColumnName="IdPotrawy" />
