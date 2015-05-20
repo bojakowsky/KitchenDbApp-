@@ -49,6 +49,7 @@ namespace KitchenDbApp
             {
                 var query =
                 from recipe in dataEntities.Potrawy
+                where recipe.Skladniki != "NULL"
                 select new  { recipe.IdPotrawy, recipe.NazwaPotrawy, recipe.Skladniki, recipe.Przygotowanie };
                 DataGrid.ItemsSource = query.ToList();
             }
